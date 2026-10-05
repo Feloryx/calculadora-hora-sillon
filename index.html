@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora gratuita de hora-sillón para odontólogos en Perú. Descubre cuánto te cuesta realmente cada hora de trabajo en tu consultorio dental.">
+  <title>Calcula tu Hora-Sillón en 3 Minutos — FELORYX Dental Perú</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">FELORYX</div>
+      <p class="brand-sub">Dental Business</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <h1>Calcula tu Hora-Sillón<br><span class="accent">en 3 Minutos</span></h1>
+        <p class="hero-sub">Introduce los datos de tu consultorio y descubre cuánto te cuesta realmente cada hora de trabajo — el primer número que todo odontólogo peruano debería conocer.</p>
+      </div>
+    </section>
+
+    <!-- CALCULATOR FORM -->
+    <section class="calculator-section">
+      <div class="container">
+        <form id="calculatorForm" novalidate>
+
+          <!-- REQUIRED FIELDS -->
+          <div class="field-group">
+            <div class="group-header">
+              <span class="group-icon">📋</span>
+              <div>
+                <h2 class="group-title">Datos obligatorios</h2>
+                <p class="group-desc">Estos tres datos son suficientes para el cálculo básico.</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="gastosFijos">
+                Gastos fijos mensuales
+                <span class="tooltip" data-tip="Alquiler + suministros + seguros + salarios + cuotas fijas. Todo lo que pagas aunque no trabajes ningún día.">ℹ️</span>
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix">S/</span>
+                <input type="number" id="gastosFijos" name="gastosFijos" placeholder="7000" min="0" step="1" inputmode="numeric" required>
+              </div>
+              <span class="field-hint">Ejemplo: alquiler S/2500 + sueldos S/4000 + servicios S/500 = S/7000</span>
+              <span class="field-error" id="err-gastosFijos"></span>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="diasTrabajados">
+                  Días trabajados al mes
+                  <span class="tooltip" data-tip="Días reales con el sillón operativo. Típico: 20-22 días.">ℹ️</span>
+                </label>
+                <div class="input-wrapper">
+                  <input type="number" id="diasTrabajados" name="diasTrabajados" placeholder="20" min="1" max="31" step="1" inputmode="numeric" required>
+                  <span class="input-suffix">días</span>
+                </div>
+                <span class="field-error" id="err-diasTrabajados"></span>
+              </div>
+
+              <div class="field">
+                <label for="horasDia">
+                  Horas disponibles por día
+                  <span class="tooltip" data-tip="Horas que el sillón está disponible para pacientes, no el tiempo real ocupado.">ℹ️</span>
+                </label>
+                <div class="input-wrapper">
+                  <input type="number" id="horasDia" name="horasDia" placeholder="8" min="1" max="16" step="0.5" inputmode="decimal" required>
+                  <span class="input-suffix">h/día</span>
+                </div>
+                <span class="field-error" id="err-horasDia"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPTIONAL FIELDS -->
+          <div class="field-group optional-group">
+            <button type="button" class="toggle-optional" id="toggleOptional" aria-expanded="false">
+              <span class="toggle-icon">+</span>
+              <span>Añadir datos opcionales <em>(mejora la precisión)</em></span>
+            </button>
+
+            <div class="optional-fields" id="optionalFields" hidden>
+
+              <div class="field">
+                <label for="pctOcupacion">
+                  Porcentaje de ocupación real
+                  <span class="tooltip" data-tip="¿Qué porcentaje del tiempo disponible realmente tienes pacientes? Si tienes pocas citas, tu costo real por hora sube.">ℹ️</span>
+                </label>
+                <div class="input-wrapper">
+                  <input type="number" id="pctOcupacion" name="pctOcupacion" placeholder="75" min="10" max="100" step="1" inputmode="numeric">
+                  <span class="input-suffix">%</span>
+                </div>
+                <div class="range-wrapper">
+                  <input type="range" id="pctOcupacionRange" min="10" max="100" step="5" value="75">
+                  <div class="range-labels">
+                    <span>10%</span><span>50%</span><span>100%</span>
+                  </div>
+                </div>
+                <span class="field-hint">Valor por defecto si no lo conoces: 75%</span>
+                <span class="field-error" id="err-pctOcupacion"></span>
+              </div>
+
+              <div class="field">
+                <label for="gastosVariables">
+                  Gastos variables mensuales
+                  <span class="tooltip" data-tip="Materiales dentales, fungibles, laboratorio, comisiones. Solo los costos que varían según el número de pacientes.">ℹ️</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-prefix">S/</span>
+                  <input type="number" id="gastosVariables" name="gastosVariables" placeholder="1500" min="0" step="1" inputmode="numeric">
+                </div>
+                <span class="field-hint">Si no lo tienes claro, deja en blanco (se usará 0).</span>
+              </div>
+
+              <div class="field">
+                <label for="margenObjetivo">
+                  Margen de beneficio objetivo
+                  <span class="tooltip" data-tip="¿Qué % de beneficio sobre el costo quieres obtener? Un 30% significa que si tu costo es €30/h, fijarás €39/h.">ℹ️</span>
+                </label>
+                <div class="input-wrapper">
+                  <input type="number" id="margenObjetivo" name="margenObjetivo" placeholder="30" min="0" max="200" step="5" inputmode="numeric">
+                  <span class="input-suffix">%</span>
+                </div>
+                <span class="field-hint">Valor por defecto: 30%. Consultorios especializados en Perú suelen usar 40-60%.</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-calculate" id="btnCalculate">
+              Calcular mi hora-sillón →
+            </button>
+          </div>
+
+          <div class="global-error" id="globalError" hidden></div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="results-section" id="resultsSection" hidden>
+      <div class="container">
+
+        <div class="results-header">
+          <h2>Tu hora-sillón calculada</h2>
+          <p class="results-sub">Basado en los datos que introdujiste</p>
+        </div>
+
+        <div class="results-grid">
+
+          <div class="result-card result-main">
+            <div class="result-label">Costo de tu hora-sillón</div>
+            <div class="result-value" id="resCostoHora">—</div>
+            <div class="result-unit">por hora</div>
+            <div class="result-context" id="resCostoContext"></div>
+          </div>
+
+          <div class="result-card result-secondary">
+            <div class="result-label">Precio objetivo de referencia</div>
+            <div class="result-value result-value--sm" id="resPrecioObjetivo">—</div>
+            <div class="result-unit">por hora <span id="resMargenLabel"></span></div>
+          </div>
+
+        </div>
+
+        <div class="results-detail">
+          <h3>Desglose del cálculo</h3>
+          <table class="detail-table">
+            <tbody>
+              <tr>
+                <td>Horas disponibles/mes</td>
+                <td id="detHorasDisp">—</td>
+              </tr>
+              <tr>
+                <td>Horas productivas/mes</td>
+                <td id="detHorasProd">—</td>
+              </tr>
+              <tr>
+                <td>Costo fijo por hora productiva</td>
+                <td id="detCostoFijo">—</td>
+              </tr>
+              <tr id="rowCostoVar" hidden>
+                <td>Costo variable por hora productiva</td>
+                <td id="detCostoVar">—</td>
+              </tr>
+              <tr class="row-total">
+                <td><strong>Costo/hora-sillón total</strong></td>
+                <td id="detCostoTotal">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insight-box" id="insightBox">
+          <div class="insight-icon">💡</div>
+          <p id="insightText"></p>
+        </div>
+
+        <!-- BREVO CAPTURE FORM -->
+        <div class="brevo-capture-block">
+          <p class="brevo-capture-label">Recibe tu análisis completo en PDF + estrategia de precios para tu consultorio:</p>
+          <iframe
+            src="https://30c91e0a.sibforms.com/v2/serve/MUIFABDYr7OUxVPMuswmudf8vQjoiYFtbk8G00z_HhKNlq1Dkno3tfxU36TSB9cqzbGgcaWpnzvMYsmwXCzi7zatsFIvaE1GMMlni0aW157BhUIQ2J98F0MraszTq4REsOsNJLqcg09_0AwSjpJ_SzGJIUd_BvCY8dsYWykspdFVVTUJg77Lf29-Z5khlPTq1uLK38L_XqPS4ZT2zg=="
+            width="540"
+            height="305"
+            frameborder="0"
+            scrolling="auto"
+            allowfullscreen
+            style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"
+            title="Registro — FELORYX Dental"
+          ></iframe>
+        </div>
+
+        <div class="results-actions">
+          <button type="button" class="btn-secondary" id="btnRecalculate">
+            Recalcular con otros datos
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="ctaSection">
+      <div class="container">
+        <div class="cta-card">
+          <h2>Ahora que conoces tu hora-sillón…</h2>
+          <p>Descubre cómo convertir ese número en precios más inteligentes — sin adivinar, sin copiar a la competencia.</p>
+          <p class="cta-detail">En <strong>Precio Justo Dental</strong> encontrarás el sistema completo para odontólogos peruanos: cómo calcular el escandallo por tratamiento, construir tu tarifario en soles y presentar tus precios con confianza.</p>
+          <a href="https://amazon.com" class="btn-cta" id="ctaLink" target="_blank" rel="noopener">
+            Ver Precio Justo Dental en Amazon →
+          </a>
+          <p class="cta-note">Disponible próximamente en Amazon KDP.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 FELORYX Dental Business · Perú · Calculadora de uso libre · <a href="#top">Volver arriba</a></p>
+      <p class="footer-disclaimer">Esta calculadora es orientativa. Los resultados en soles (S/) dependen de la precisión de los datos introducidos. No sustituye asesoramiento financiero profesional.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
