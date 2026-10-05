@@ -495,10 +495,15 @@ input[type="range"] {
   border-radius: var(--radius-sm);
 }
 @media (max-width: 560px) {
+  .brevo-capture-block { padding: 16px 8px; }
   .brevo-capture-block iframe {
     width: 100% !important;
-    height: 340px !important;
+    height: 560px !important;
   }
+}
+@media (max-width: 380px) {
+  .brevo-capture-block iframe { height: 620px !important; }
+  .tooltip::after { width: 180px; left: auto; right: 0; transform: none; }
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .brevo-capture-block {
@@ -565,6 +570,24 @@ input[type="range"] {
 .btn-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
+.cta-soon {
+  margin: 18px auto 4px;
+  max-width: 520px;
+  padding: 16px 18px;
+  border: 1px dashed rgba(255,255,255,.55);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,.08);
+}
+.cta-card .cta-soon-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.cta-card .cta-soon-text {
+  font-size: .85rem;
+  margin-bottom: 0;
 }
 .cta-note {
   font-size: .75rem !important;

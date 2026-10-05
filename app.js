@@ -157,18 +157,17 @@ function formatHours(h) {
   return h.toLocaleString('es-PE', { maximumFractionDigits: 1 }) + ' h';
 }
 
-// --- Generate contextual insight ---
+// --- Generate contextual insight (neutral, technical) ---
 function generateInsight(res) {
-  const c = res.costoHoraSillon;
-  if (c < 80) {
-    return `Tu costo de ${formatCurrency(c)}/h es bajo para el mercado peruano. Verifica que hayas incluido todos los gastos fijos — alquiler, sueldos, servicios, seguro y amortización de equipos.`;
-  } else if (c < 180) {
-    return `Tu costo de ${formatCurrency(c)}/h está en el rango habitual de consultorios pequeños en Perú. Con un ${res.pctOcupacion}% de ocupación, necesitas generar al menos ${formatCurrency(c)} por cada hora de sillón operativa solo para cubrir gastos fijos.`;
-  } else if (c < 320) {
-    return `Tu costo de ${formatCurrency(c)}/h indica una estructura de gastos media-alta. Muchos dentistas en clínicas urbanas de Lima o provincias cobran por debajo de este umbral sin saberlo — esta calculadora revela ese gap.`;
+  let msg = `Tu costo fijo operativo es de ${formatCurrency(res.costoFijoPorHora)} por hora productiva ` +
+            `(${formatHours(res.horasProductivas)} productivas de ${formatHours(res.horasDisponiblesMes)} disponibles, con ${res.pctOcupacion}% de ocupación). `;
+  if (res.tieneVariables) {
+    msg += `Sumando costos variables, tu costo/hora-sillón calculado es de ${formatCurrency(res.costoHoraSillon)}. ` +
+           `Utiliza este umbral como base mínima antes de añadir tu margen de ganancia en tus tratamientos.`;
   } else {
-    return `Tu costo de ${formatCurrency(c)}/h es elevado. Puede deberse a alquiler en zona premium, varios auxiliares o baja ocupación. Incluso reducir un 10% los gastos fijos o subir 5 puntos el porcentaje de ocupación puede bajar tu umbral significativamente.`;
+    msg += `Utiliza este umbral como base mínima antes de añadir costos variables y margen de ganancia en tus tratamientos.`;
   }
+  return msg;
 }
 
 // --- Display results ---
