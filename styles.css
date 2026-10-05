@@ -498,11 +498,11 @@ input[type="range"] {
   .brevo-capture-block { padding: 16px 8px; }
   .brevo-capture-block iframe {
     width: 100% !important;
-    height: 560px !important;
+    height: 620px !important;
   }
 }
 @media (max-width: 380px) {
-  .brevo-capture-block iframe { height: 620px !important; }
+  .brevo-capture-block iframe { height: 680px !important; }
   .tooltip::after { width: 180px; left: auto; right: 0; transform: none; }
 }
 @media (prefers-color-scheme: dark) {
