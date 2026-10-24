@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -196,16 +196,20 @@
 </div>
 
 <script>
-// Disparar evento generate_lead al cargar la página
-// Solo se ejecuta si GA4 está activo (gtag definido)
+// Disparar evento generate_lead UNA VEZ por sesion de navegador.
+// sessionStorage evita el re-disparo en reloads dentro de la misma pestana.
 (function() {
   function fireLeadEvent() {
+    try {
+      if (sessionStorage.getItem('feloryx_lead_fired')) return;
+    } catch(e) {}
     if (typeof gtag !== 'undefined') {
       gtag('event', 'generate_lead', {
         event_category: 'conversion',
         event_label: 'brevo_signup_confirmed',
         value: 1
       });
+      try { sessionStorage.setItem('feloryx_lead_fired', '1'); } catch(e) {}
     }
   }
   if (document.readyState === 'complete') {
