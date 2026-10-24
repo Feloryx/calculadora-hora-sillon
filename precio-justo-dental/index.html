@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!-- FELORYX-GA4 START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVSLRD84X2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DVSLRD84X2');</script>
+<!-- FELORYX-GA4 END -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Precio Justo Dental — Calcula tu costo hora-sillón y tus precios mínimos</title>
@@ -405,9 +409,20 @@ footer .disc{max-width:760px;margin-top:10px;color:#94a3b8}
 </div>
 
 <script>
-  // ⬇️ PEGA AQUÍ TU LINK DE CHECKOUT DE HOTMART (Producto → Links de venta → "Pago")
+  // Checkout Hotmart con atribución: Hotmart registra src/sck en el reporte de ventas.
   var CHECKOUT_URL = "https://pay.hotmart.com/T108039382I";
-  document.querySelectorAll('.offer .buy').forEach(function(a){ a.href = CHECKOUT_URL; });
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var src = (p.get('utm_source') || 'directo').replace(/[^a-z0-9_-]/gi, '').slice(0, 30);
+    var sck = [src, p.get('utm_medium') || 'na', p.get('utm_content') || 'na'].join('_').replace(/[^a-z0-9_-]/gi, '').slice(0, 60);
+    var url = CHECKOUT_URL + '?src=' + encodeURIComponent(src) + '&sck=' + encodeURIComponent(sck);
+    document.querySelectorAll('.offer .buy').forEach(function (a) {
+      a.href = url;
+      a.addEventListener('click', function () {
+        if (typeof gtag === 'function') gtag('event', 'begin_checkout', { currency: 'USD', value: 9.90, items: [{ item_id: 'T001', item_name: 'Precio Justo Dental' }] });
+      });
+    });
+  })();
 </script>
 </body>
 </html>
