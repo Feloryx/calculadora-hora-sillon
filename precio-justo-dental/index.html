@@ -413,7 +413,7 @@ footer .disc{max-width:760px;margin-top:10px;color:#94a3b8}
   var CHECKOUT_URL = "https://pay.hotmart.com/T108039382I";
   (function () {
     var p = new URLSearchParams(location.search);
-    var src = (p.get('utm_source') || 'directo').replace(/[^a-z0-9_-]/gi, '').slice(0, 30);
+    var src = (p.get('utm_source') || p.get('src') || 'directo').replace(/[^a-z0-9_-]/gi, '').slice(0, 30);
     var sck = [src, p.get('utm_medium') || 'na', p.get('utm_content') || 'na'].join('_').replace(/[^a-z0-9_-]/gi, '').slice(0, 60);
     var url = CHECKOUT_URL + '?src=' + encodeURIComponent(src) + '&sck=' + encodeURIComponent(sck);
     document.querySelectorAll('.offer .buy').forEach(function (a) {
