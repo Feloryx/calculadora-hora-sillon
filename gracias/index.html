@@ -1,25 +1,14 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
+<!-- FELORYX-GA4 START -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVSLRD84X2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DVSLRD84X2');</script>
+<!-- FELORYX-GA4 END -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Listo — FELORYX Dental</title>
 
-<!-- Google Analytics 4 — FELORYX Dental -->
-<!-- PENDIENTE: reemplazar FELORYX_GA4_ID_PENDIENTE con tu Measurement ID G-XXXXXXXXXX -->
-<!-- Pasos: analytics.google.com → Admin → Crear propiedad → Flujos de datos → Web → copiar ID -->
-<!--
-<script async src="https://www.googletagmanager.com/gtag/js?id=FELORYX_GA4_ID_PENDIENTE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'FELORYX_GA4_ID_PENDIENTE', {
-    page_title: 'Gracias - Lead Confirmado',
-    send_page_view: true
-  });
-</script>
--->
 
 <style>
   :root {
@@ -165,7 +154,7 @@
 
   <h1>¡Ya estás dentro!</h1>
   <p class="subtitle">
-    Te enviamos la guía financiera gratuita al correo que dejaste.
+    Tu suscripción está confirmada. En unos minutos te llega la guía gratuita al correo que dejaste.
     Revisa tu bandeja de entrada (y el spam, por si acaso).
   </p>
 
@@ -180,14 +169,15 @@
   </p>
 
   <a class="btn-cta"
-     href="https://pay.hotmart.com/T108039382I?utm_source=calculadora&utm_medium=gracias&utm_campaign=t001_dental_costos&utm_content=gracias_cta"
-     target="_blank" rel="noopener noreferrer"
-     onclick="if(typeof gtag!=='undefined'){gtag('event','purchase_intent',{event_category:'conversion',event_label:'gracias_cta_hotmart',value:9.90,currency:'USD'});}">
+     href="https://pay.hotmart.com/T108039382I?src=brevo&sck=brevo_gracias_cta"
+     target="_blank" rel="noopener"
+     onclick="if(typeof gtag==='function'){gtag('event','begin_checkout',{currency:'USD',value:9.90,items:[{item_id:'T001',item_name:'Precio Justo Dental'}],cta_id:'gracias_cta'});}">
     Ver Precio Justo Dental →
   </a>
-  <p class="price-tag">Guía completa + herramienta de precios · US$ 9.90</p>
+  <p class="price-tag">Guía + Calculadora Excel · S/ 37 (US$ 9.90), pago único</p>
 
   <p class="back-link">
+    <a href="https://feloryx.github.io/calculadora-hora-sillon/calculadora-web/?utm_source=brevo&utm_medium=gracias&utm_campaign=t001_calculadora">Abrir la calculadora web completa →</a><br>
     <a href="https://feloryx.github.io/calculadora-hora-sillon/"
        onclick="if(typeof gtag!=='undefined'){gtag('event','back_to_calc',{event_category:'navigation',event_label:'gracias_back'});}">
       ← Volver a la calculadora
@@ -196,27 +186,22 @@
 </div>
 
 <script>
-// Disparar evento generate_lead UNA VEZ por sesion de navegador.
-// sessionStorage evita el re-disparo en reloads dentro de la misma pestana.
-(function() {
-  function fireLeadEvent() {
-    try {
-      if (sessionStorage.getItem('feloryx_lead_fired')) return;
-    } catch(e) {}
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'generate_lead', {
-        event_category: 'conversion',
-        event_label: 'brevo_signup_confirmed',
-        value: 1
-      });
-      try { sessionStorage.setItem('feloryx_lead_fired', '1'); } catch(e) {}
-    }
+// generate_lead SOLO cuando la visita viene del enlace de doble opt-in de Brevo
+// (redirección configurada a /gracias/?lead=1). Idempotente: una vez por navegador
+// (localStorage) y el parámetro se elimina de la URL para que recargas/compartidos no cuenten.
+(function () {
+  var p = new URLSearchParams(location.search);
+  if (p.get('lead') !== '1') return;
+  var KEY = 'feloryx_t001_lead_v2';
+  var seen = false;
+  try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+  if (!seen && typeof gtag === 'function') {
+    gtag('event', 'generate_lead', { lead_source: 'brevo_doi', form_id: 'calculadora_hora_sillon', currency: 'USD', value: 1 });
+    try { localStorage.setItem(KEY, '1'); } catch (e) {}
   }
-  if (document.readyState === 'complete') {
-    fireLeadEvent();
-  } else {
-    window.addEventListener('load', fireLeadEvent);
-  }
+  p.delete('lead');
+  var q = p.toString();
+  try { history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash); } catch (e) {}
 })();
 </script>
 
