@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listo — FELORYX Dental</title>
+
+<!-- Google Analytics 4 — FELORYX Dental -->
+<!-- PENDIENTE: reemplazar FELORYX_GA4_ID_PENDIENTE con tu Measurement ID G-XXXXXXXXXX -->
+<!-- Pasos: analytics.google.com → Admin → Crear propiedad → Flujos de datos → Web → copiar ID -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=FELORYX_GA4_ID_PENDIENTE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'FELORYX_GA4_ID_PENDIENTE', {
+    page_title: 'Gracias - Lead Confirmado',
+    send_page_view: true
+  });
+</script>
+-->
+
+<style>
+  :root {
+    --bg:     #0F172A;
+    --bg2:    #1E293B;
+    --fg:     #F1F5F9;
+    --muted:  #94A3B8;
+    --accent: #38BDF8;
+    --accentd:#0EA5E9;
+    --ok:     #4ADE80;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg:    #F8FAFC; --bg2:   #EFF6FF;
+      --fg:    #0F172A; --muted: #64748B;
+      --accent:#0284C7; --accentd:#0369A1;
+      --ok:    #16A34A;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#F8FAFC; --bg2:#EFF6FF;
+    --fg:#0F172A; --muted:#64748B;
+    --accent:#0284C7; --accentd:#0369A1;
+    --ok:#16A34A; color-scheme: light;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    text-align: center;
+  }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid rgba(56,189,248,.15);
+    border-radius: 20px;
+    padding: 40px 32px;
+    max-width: 520px;
+    width: 100%;
+  }
+
+  .check-icon {
+    width: 64px; height: 64px;
+    background: rgba(74,222,128,.12);
+    border: 2px solid var(--ok);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 28px;
+  }
+
+  h1 {
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(56,189,248,.12);
+    margin: 28px 0;
+  }
+
+  .upsell-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .upsell-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 8px;
+    text-wrap: balance;
+  }
+
+  .upsell-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accentd));
+    color: #0F172A;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 13px;
+    text-decoration: none;
+    box-shadow: 0 4px 22px rgba(56,189,248,.28);
+    transition: transform .15s, box-shadow .15s;
+    cursor: pointer;
+  }
+  .btn-cta:hover { transform: translateY(-1px); box-shadow: 0 7px 30px rgba(56,189,248,.40); }
+
+  .price-tag {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  .back-link {
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="check-icon">✓</div>
+
+  <h1>¡Ya estás dentro!</h1>
+  <p class="subtitle">
+    Te enviamos la guía financiera gratuita al correo que dejaste.
+    Revisa tu bandeja de entrada (y el spam, por si acaso).
+  </p>
+
+  <hr class="divider">
+
+  <p class="upsell-label">Siguiente paso recomendado</p>
+  <p class="upsell-title">Convierte ese número en precios reales</p>
+  <p class="upsell-desc">
+    La calculadora te da tu hora-sillón. <em>Precio Justo Dental</em> te muestra
+    cómo convertir ese dato en un tarifario por especialidad, presentar
+    presupuestos con confianza y actualizar precios cada año sin improvisación.
+  </p>
+
+  <a class="btn-cta"
+     href="https://pay.hotmart.com/T108039382I?utm_source=calculadora&utm_medium=gracias&utm_campaign=t001_dental_costos&utm_content=gracias_cta"
+     target="_blank" rel="noopener noreferrer"
+     onclick="if(typeof gtag!=='undefined'){gtag('event','purchase_intent',{event_category:'conversion',event_label:'gracias_cta_hotmart',value:9.90,currency:'USD'});}">
+    Ver Precio Justo Dental →
+  </a>
+  <p class="price-tag">Guía completa + herramienta de precios · US$ 9.90</p>
+
+  <p class="back-link">
+    <a href="https://feloryx.github.io/calculadora-hora-sillon/"
+       onclick="if(typeof gtag!=='undefined'){gtag('event','back_to_calc',{event_category:'navigation',event_label:'gracias_back'});}">
+      ← Volver a la calculadora
+    </a>
+  </p>
+</div>
+
+<script>
+// Disparar evento generate_lead al cargar la página
+// Solo se ejecuta si GA4 está activo (gtag definido)
+(function() {
+  function fireLeadEvent() {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'generate_lead', {
+        event_category: 'conversion',
+        event_label: 'brevo_signup_confirmed',
+        value: 1
+      });
+    }
+  }
+  if (document.readyState === 'complete') {
+    fireLeadEvent();
+  } else {
+    window.addEventListener('load', fireLeadEvent);
+  }
+})();
+</script>
+
+</body>
+</html>
