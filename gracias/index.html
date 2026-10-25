@@ -186,17 +186,20 @@
 </div>
 
 <script>
-// generate_lead SOLO cuando la visita viene del enlace de doble opt-in de Brevo
-// (redirección configurada a /gracias/?lead=1). Idempotente: una vez por navegador
-// (localStorage) y el parámetro se elimina de la URL para que recargas/compartidos no cuenten.
+// generate_lead cuando:
+//   A) ?lead=1  — redireccion directa desde formulario Brevo (via postMessage listener)
+//   B) ?utm_source=brevo&utm_medium=form — fallback si el iframe redirige sin postMessage
+// Idempotente: una vez por navegador (localStorage). Limpia params de URL post-disparo.
 (function () {
   var p = new URLSearchParams(location.search);
-  if (p.get('lead') !== '1') return;
+  var fromBrevo = (p.get('utm_source') === 'brevo' && p.get('utm_medium') === 'form');
+  var hasLeadParam = (p.get('lead') === '1');
+  if (!hasLeadParam && !fromBrevo) return;
   var KEY = 'feloryx_t001_lead_v2';
   var seen = false;
   try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
   if (!seen && typeof gtag === 'function') {
-    gtag('event', 'generate_lead', { lead_source: 'brevo_doi', form_id: 'calculadora_hora_sillon', currency: 'USD', value: 1 });
+    gtag('event', 'generate_lead', { lead_source: 'brevo_form', form_id: 'calculadora_hora_sillon', currency: 'USD', value: 1 });
     try { localStorage.setItem(KEY, '1'); } catch (e) {}
   }
   p.delete('lead');

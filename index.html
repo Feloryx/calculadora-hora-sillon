@@ -869,5 +869,23 @@ nav(1);
   </div>
   <!-- ── /UPSELL ─────────────────────────────────────────────────────────── -->
 
+<script>
+/* Brevo iframe: redirige la ventana padre cuando el formulario se envía correctamente */
+(function () {
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    var d = e.data;
+    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (_) { return; } }
+    /* Formatos conocidos de Brevo/SIB: form-submitted, redirect, FORM_SUBMITTED */
+    if (d.type === 'form-submitted' || d.type === 'redirect' || d.event === 'FORM_SUBMITTED') {
+      var dest = 'https://feloryx.github.io/calculadora-hora-sillon/gracias/?lead=1&utm_source=brevo&utm_medium=form&utm_campaign=t001-pjd';
+      if (typeof d.href === 'string' && d.href.indexOf('gracias') !== -1) {
+        dest = d.href.indexOf('lead=') === -1 ? d.href + '&lead=1' : d.href;
+      }
+      window.location.href = dest;
+    }
+  }, false);
+})();
+</script>
 </body>
 </html>
