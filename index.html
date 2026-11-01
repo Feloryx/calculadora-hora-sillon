@@ -870,6 +870,23 @@ nav(1);
   <!-- ── /UPSELL ─────────────────────────────────────────────────────────── -->
 
 <script>
+/* UTM pass-through: preserva la fuente original (Instagram, TikTok, etc.) en el enlace al offer page */
+(function () {
+  var p = new URLSearchParams(location.search);
+  var origSrc = p.get('utm_source') || p.get('src') || 'calculadora';
+  var origMedium = p.get('utm_medium') || 'organic';
+  var origContent = p.get('utm_content') || '';
+  var a = document.querySelector('.fx-btn-hotmart');
+  if (a) {
+    var base = 'https://feloryx.github.io/calculadora-hora-sillon/precio-justo-dental/';
+    var params = 'utm_source=' + encodeURIComponent(origSrc)
+               + '&utm_medium=cta'
+               + '&utm_campaign=t001_dental_costos'
+               + '&utm_content=' + encodeURIComponent(origContent || 'calc_cta_btn');
+    a.href = base + '?' + params;
+  }
+})();
+
 /* Brevo iframe: redirige la ventana padre cuando el formulario se envía correctamente */
 (function () {
   window.addEventListener('message', function (e) {
